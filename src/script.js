@@ -41,11 +41,15 @@ function deleteCheck(event) {
   // delete to do by clicking on the trash button
   if (item.classList[0] === "trash-button") {
     const todo = item.parentElement;
-    todo.remove();
+    // add animation
+    todo.classList.add("fall");
+    todo.addEventListener("transitionend", function () {
+      todo.remove();
+    });
   }
   // marking a to do as complete
   if (item.classList[0] === "complete-button") {
     const todo = item.parentElement;
-    todo.classList.toogle("completed");
+    todo.classList.toggle("completed");
   }
 }
