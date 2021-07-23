@@ -43,9 +43,11 @@ function deleteCheck(event) {
     const todo = item.parentElement;
     // add animation
     todo.classList.add("fall");
-    todo.addEventListener("transitionend", function () {
+
+    todo.addEventListener("transitionend", removeTodo);
+    function removeTodo() {
       todo.remove();
-    });
+    }
   }
   // marking a to do as complete
   if (item.classList[0] === "complete-button") {
@@ -53,3 +55,37 @@ function deleteCheck(event) {
     todo.classList.toggle("completed");
   }
 }
+
+// filter the to dos
+
+const filterOption = document.querySelector(".filter-todo");
+filterOption.addEventListener("change", filterTodo);
+
+function filterTodo(event) {
+  const todos = todoList.childNodes;
+  todos.forEach(function (todo) {
+    switch (event.target.value) {
+      case "all":
+        todo.style.display = "flex";
+        break;
+      case "completed":
+        if (todo.classList.contains("completed")) {
+          todo.style.display = "flex";
+        } else {
+          todo.style.display = "none";
+        }
+        break;
+      case "incomplete":
+        if (!todo.classList.contains("completed")) {
+          todo.style.display = "flex";
+        } else {
+          todo.style.display = "none";
+        }
+        break;
+    }
+  });
+}
+
+// save the to dos to local storage
+
+function saveLocalTodos(todo) {}

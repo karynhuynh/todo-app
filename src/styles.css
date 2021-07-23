@@ -122,17 +122,17 @@ select {
   cursor: pointer;
   padding: 1rem;
   font-size: 1rem;
-  transition: all 0.5s ease;
 }
 
 .select::after {
-  content: "\25BC";
+  content: "\25bc";
   position: absolute;
   background: #fda085;
   top: 0;
   right: 0;
   padding: 1rem;
   pointer-events: none;
+  transition: all 0.5s ease;
 }
 
 .select:hover::after {
