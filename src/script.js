@@ -17,6 +17,8 @@ function addTodo(event) {
   newTodo.innerText = todoInput.value;
   newTodo.classList.add("todo-item");
   todoDiv.appendChild(newTodo);
+  // add to do to local storage
+  saveLocalTodos(todoInput.value);
   // checkmark button -> child element
   const completedButton = document.createElement("button");
   completedButton.innerHTML = '<i class="fas fa-check"></i>';
@@ -44,6 +46,7 @@ function deleteCheck(event) {
     // add animation
     todo.classList.add("fall");
 
+    removeLocalTodos(todo);
     todo.addEventListener("transitionend", removeTodo);
     function removeTodo() {
       todo.remove();
@@ -86,6 +89,61 @@ function filterTodo(event) {
   });
 }
 
-// save the to dos to local storage
+// save the to dos to the local storage
 
-function saveLocalTodos(todo) {}
+function saveLocalTodos(todo) {
+  // check = do i have anything stored?
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+  todos.push(todo);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+document.addEventListener("DOMContentLoaded", getTodos);
+
+function getTodos() {
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+  todos.forEach(function (todo) {
+    // to do div -> parent element
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todo");
+    // create li -> child element
+    const newTodo = document.createElement("li");
+    newTodo.innerText = todo;
+    newTodo.classList.add("todo-item");
+    todoDiv.appendChild(newTodo);
+    // checkmark button -> child element
+    const completedButton = document.createElement("button");
+    completedButton.innerHTML = '<i class="fas fa-check"></i>';
+    completedButton.classList.add("complete-button");
+    todoDiv.appendChild(completedButton);
+    // trash button -> child element
+    const trashButton = document.createElement("button");
+    trashButton.innerHTML = '<i class="fas fa-trash"></i>';
+    trashButton.classList.add("trash-button");
+    todoDiv.appendChild(trashButton);
+    // append to list -> child element
+    todoList.appendChild(todoDiv);
+  });
+}
+
+function removeLocalTodos(todo) {
+  let todos;
+  if (localStorage.getItem("todos") === null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+  const todoIndex = todo.children[0].innerText;
+  todos.splice(todos.indexOf(todoIndex), 1);
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
