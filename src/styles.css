@@ -108,6 +108,11 @@ select {
   appearance: none;
   outline: none;
   border: none;
+  color: #fda085;
+  width: 10rem;
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 1rem;
 }
 
 .select {
@@ -116,16 +121,8 @@ select {
   overflow: hidden;
 }
 
-select {
-  color: #fda085;
-  width: 10rem;
-  cursor: pointer;
-  padding: 1rem;
-  font-size: 1rem;
-}
-
 .select::after {
-  content: "\25bc";
+  content: "\25BC";
   position: absolute;
   background: #fda085;
   top: 0;
